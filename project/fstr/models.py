@@ -1,8 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
-from django.contrib.auth.models import User, AbstractBaseUser
-from django.db import connection
-from django.apps import AppConfig
+from django.contrib.auth.models import User
 
 
 class PerevalAdded(models.Model):
