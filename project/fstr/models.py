@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .resourses import *
 
 
-class PerevalAdded(models.Model):
+class Pereval(models.Model):
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default=NEW)
     beauty_title = models.CharField(max_length=128, verbose_name='Препядствие')
     title = models.CharField(max_length=128, verbose_name='Вершина')
@@ -53,7 +53,7 @@ class Images(models.Model):
     title = models.CharField(max_length=128)
     add_time = models.DateField(auto_now_add=True)
 
-    pereval = models.ForeignKey(PerevalAdded, on_delete=models.CASCADE, related_name='images')
+    pereval = models.ForeignKey(Pereval, on_delete=models.CASCADE, related_name='images')
 
     def __str__(self):
         return f'id: {self.pk}, {self.title}'
