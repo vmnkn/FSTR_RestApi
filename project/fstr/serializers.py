@@ -9,6 +9,7 @@ class CoordinatesSerializer(serializers.ModelSerializer):
         fields = ('latitude',
                   'longitude',
                   'height', )
+        verbose_name = 'Координаты'
 
 
 class LevelSerializer(serializers.ModelSerializer):
@@ -18,9 +19,16 @@ class LevelSerializer(serializers.ModelSerializer):
                   'summer',
                   'autumn',
                   'spring', )
+        verbose_name = 'Уровень сложности'
 
 
 class UserSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source='first_name')
+    fam = serializers.CharField(source='last_name')
+    otc = serializers.CharField(source='patronymic')
+    email = serializers.CharField()
+    phone = serializers.CharField()
+
     class Meta:
         model = User
         fields = ('email',
@@ -28,13 +36,17 @@ class UserSerializer(serializers.ModelSerializer):
                   'name',
                   'otc',
                   'phone', )
+        verbose_name = 'Пользователь'
 
 
 class ImagesSerializer(serializers.ModelSerializer):
+    data = serializers.ImageField(use_url=True)
+
     class Meta:
         model = Images
-        fields = ('image',
+        fields = ('data',
                   'title', )
+        verbose_name = 'Изображение'
 
 
 class PerevalSerializer(serializers.ModelSerializer):
