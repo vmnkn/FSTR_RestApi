@@ -1,20 +1,10 @@
 from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
+from .resourses import *
 
 
 class PerevalAdded(models.Model):
-    NEW = 'new'
-    PENDING = 'pending'
-    ACCEPTED = 'accepted'
-    REJECTED = 'rejected'
-    STATUS_CHOICES = [
-        ('new', 'новый'),
-        ('pending', 'модератор взял в работу'),
-        ('accepted', 'модерация прошла успешно'),
-        ('rejected', 'информация не принята'),
-    ]
-
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default=NEW)
     beauty_title = models.CharField(max_length=128, verbose_name='Препядствие')
     title = models.CharField(max_length=128, verbose_name='Вершина')
