@@ -15,6 +15,7 @@ class Pereval(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     coordinates = models.ForeignKey('Coordinates', on_delete=models.CASCADE)
     level = models.ForeignKey('Level', on_delete=models.CASCADE)
+    images = models.ManyToManyField('Images')
 
     def __str__(self):
         return f'{self.beauty_title} {self.title} {self.other_titles} id: {self.pk}'
@@ -49,11 +50,9 @@ class Level(models.Model):
 
 
 class Images(models.Model):
-    image = models.ImageField(upload_to='images/%Y/%m/%d/', verbose_name='Изображение', null=True, blank=True)
+    image = models.ImageField(upload_to='images/%Y/%m/%d/', verbose_name='Изображение')
     title = models.CharField(max_length=128)
     add_time = models.DateField(auto_now_add=True)
-
-    pereval = models.ForeignKey(Pereval, on_delete=models.CASCADE, related_name='images', null=True, blank=True)
 
     def __str__(self):
         return f'id: {self.pk}, {self.title}'

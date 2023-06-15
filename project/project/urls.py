@@ -22,14 +22,15 @@ from django.conf import settings
 from fstr.views import *
 
 router = routers.SimpleRouter()
-router.register(r'pereval', PerevalViewSet)
-router.register(r'images', ImageViewSet, basename='image')
+router.register('pereval', PerevalViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('', include(router.urls)),
+    path('', include('fstr.urls')),
 ]
+
+urlpatterns += router.urls
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
