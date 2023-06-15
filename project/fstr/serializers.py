@@ -40,11 +40,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ImagesSerializer(serializers.ModelSerializer):
-    data = serializers.ImageField(use_url=True)
+    image = serializers.ImageField(use_url=True)
 
     class Meta:
         model = Images
-        fields = ('data',
+        fields = ('image',
                   'title', )
         verbose_name = 'Изображение'
 

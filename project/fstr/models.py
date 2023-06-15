@@ -49,11 +49,11 @@ class Level(models.Model):
 
 
 class Images(models.Model):
-    image = models.ImageField(upload_to='images/%Y/%m/%d/', verbose_name='Изображение', null=True)
+    image = models.ImageField(upload_to='images/%Y/%m/%d/', verbose_name='Изображение', null=True, blank=True)
     title = models.CharField(max_length=128)
     add_time = models.DateField(auto_now_add=True)
 
-    pereval = models.ForeignKey(Pereval, on_delete=models.CASCADE, related_name='images')
+    pereval = models.ForeignKey(Pereval, on_delete=models.CASCADE, related_name='images', null=True, blank=True)
 
     def __str__(self):
         return f'id: {self.pk}, {self.title}'
