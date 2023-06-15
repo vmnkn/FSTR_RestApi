@@ -79,7 +79,3 @@ class Users(models.Model):
 
     def __str__(self):
         return f'{self.fam} {self.name} {self.otc}'
-
-    class Meta:
-        verbose_name = 'Пользователи'
-        verbose_name_plural = 'Пользователи'
