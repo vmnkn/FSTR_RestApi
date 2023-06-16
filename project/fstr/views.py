@@ -1,9 +1,11 @@
+import django_filters.rest_framework
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from .models import *
-from .serializers import *
+from fstr.serializers import PerevalSerializer
+from fstr.filters import PerevalFilter
 from rest_framework.decorators import api_view
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
@@ -17,6 +19,8 @@ class PerevalViewSet(viewsets.ModelViewSet):
 class PerevalList(ListAPIView):
     queryset = Pereval.objects.all()
     serializer_class = PerevalSerializer
+    filterset_class = PerevalFilter
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
 
 
 @api_view(['POST'])
