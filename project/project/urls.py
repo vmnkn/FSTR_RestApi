@@ -26,7 +26,6 @@ router.register('pereval', PerevalViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
     path('', include('fstr.urls')),
 ]
 

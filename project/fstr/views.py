@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from .models import *
 from .serializers import *
 from rest_framework.decorators import api_view
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class PerevalViewSet(viewsets.ModelViewSet):
@@ -29,3 +30,14 @@ def submit_data(request):
         serializer.save()
         return Response(serializer.data, status=201)
     return Response(serializer.errors, status=400)
+
+
+@api_view(['GET'])
+def get_data(request, pk):
+    try:
+        pereval = Pereval.objects.all()
+    except ObjectDoesNotExist:
+        return Response(status=404)
+
+    serializer = PerevalSerializer(pereval)
+    return Response(serializer.data)
