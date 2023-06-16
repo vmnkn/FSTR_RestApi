@@ -1,10 +1,10 @@
 import django_filters.rest_framework
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from .models import *
-from fstr.serializers import PerevalSerializer
+from fstr.serializers import PerevalSerializer, PerevalUpdateSerializer
 from fstr.filters import PerevalFilter
 from rest_framework.decorators import api_view
 from django.core.exceptions import ObjectDoesNotExist
@@ -14,6 +14,8 @@ from rest_framework import status
 class PerevalViewSet(viewsets.ModelViewSet):
     queryset = Pereval.objects.all()
     serializer_class = PerevalSerializer
+    permission_classes = (permissions.AllowAny)
+    http_method_names = ['get', 'post', 'patch']
 
 
 class PerevalList(ListAPIView):
@@ -53,7 +55,7 @@ def update_data(request, pk):
     if pereval.status != 'new':
         return Response({'state': 0, 'message': 'Pereval status is not "new"'}, status=status.HTTP_400_BAD_REQUEST)
 
-    serializer = PerevalSerializer(pereval, data=request.data, partial=True)
+    serializer = PerevalUpdateSerializer(pereval, data=request.data, partial=True)
     if serializer.is_valid():
         serializer.save()
         return Response({'state': 1}, status.HTTP_200_OK)
