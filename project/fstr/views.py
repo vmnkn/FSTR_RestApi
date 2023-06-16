@@ -35,7 +35,7 @@ def submit_data(request):
 @api_view(['GET'])
 def get_data(request, pk):
     try:
-        pereval = Pereval.objects.all()
+        pereval = Pereval.objects.get(pk=pk)
     except ObjectDoesNotExist:
         return Response(status=404)
 
