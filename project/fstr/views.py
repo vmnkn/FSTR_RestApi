@@ -6,16 +6,12 @@ from .models import *
 from .serializers import *
 from rest_framework.decorators import api_view
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework import status
 
 
 class PerevalViewSet(viewsets.ModelViewSet):
     queryset = Pereval.objects.all()
     serializer_class = PerevalSerializer
-
-
-class ImageViewSet(viewsets.ModelViewSet):
-    queryset = Images.objects.all()
-    serializer_class = ImagesSerializer
 
 
 class PerevalList(ListAPIView):
@@ -25,7 +21,7 @@ class PerevalList(ListAPIView):
 
 @api_view(['POST'])
 def submit_data(request):
-    serializer = PerevalSerializer(data=request.image)
+    serializer = PerevalSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=201)
@@ -41,3 +37,20 @@ def get_data(request, pk):
 
     serializer = PerevalSerializer(pereval)
     return Response(serializer.data)
+
+
+@api_view(['PATCH'])
+def update_data(request, pk):
+    try:
+        pereval = Pereval.objects.get(pk=pk)
+    except ObjectDoesNotExist:
+        return Response({'state': 0, 'message': 'Pereval does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+    if pereval.status != 'new':
+        return Response({'state': 0, 'message': 'Pereval status is not "new"'}, status=status.HTTP_400_BAD_REQUEST)
+
+    serializer = PerevalSerializer(pereval, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({'state': 1}, status.HTTP_200_OK)
+    return Response({'state': 0, 'message': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
