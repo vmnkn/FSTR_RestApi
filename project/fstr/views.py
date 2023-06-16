@@ -14,8 +14,6 @@ from rest_framework import status
 class PerevalViewSet(viewsets.ModelViewSet):
     queryset = Pereval.objects.all()
     serializer_class = PerevalSerializer
-    permission_classes = (permissions.AllowAny)
-    http_method_names = ['get', 'post', 'patch']
 
 
 class PerevalList(ListAPIView):
